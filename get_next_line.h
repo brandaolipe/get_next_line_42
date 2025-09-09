@@ -6,7 +6,7 @@
 /*   By: febranda <febranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:02:16 by febranda          #+#    #+#             */
-/*   Updated: 2025/09/09 19:01:52 by febranda         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:49:40 by febranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 84
+#  define BUFFER_SIZE 84
 # endif
-
 
 typedef struct s_list
 {

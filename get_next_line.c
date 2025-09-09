@@ -6,7 +6,7 @@
 /*   By: febranda <febranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:59:55 by febranda          #+#    #+#             */
-/*   Updated: 2025/09/09 19:38:12 by febranda         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:04:33 by febranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*get_next_line(int fd)
 
 void	fill_list(t_list **lst, int fd)
 {
-	
+	int	bytes_read;	
 	//funcao que ve len
-	read(fd, *lst->contet, BUFFER_SIZE);
+	bytes_read = read(fd, *lst->contet, BUFFER_SIZE);
 }
 
 //int	main(void)
