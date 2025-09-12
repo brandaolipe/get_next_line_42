@@ -6,7 +6,7 @@
 /*   By: febranda <febranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:59:55 by febranda          #+#    #+#             */
-/*   Updated: 2025/09/11 17:39:35 by febranda         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:33:55 by febranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
-
-static void	fill_list(t_list **lst, int fd);
-static	void	add_node(t_list **lst, char *buffer);
-static int	detect_newline(t_list *lst);
 
 char	*get_next_line(int fd)
 {
@@ -27,10 +23,14 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	fill_list(&lst, fd);
+	if (!lst)
+		return (NULL);
+	next_line = take_newline(lst);
+	rearrenge_list(&lst);
 	return (next_line);
 }
 
-static void	fill_list(t_list **lst, int fd)
+void	fill_list(t_list **lst, int fd)
 {
 	int		bytes_read;	
 	char	*buffer;
@@ -46,7 +46,7 @@ static void	fill_list(t_list **lst, int fd)
 	}
 }
 
-static	void	add_node(t_list **lst, char *buffer)
+void	add_node(t_list **lst, char *buffer)
 {
 	t_list	*new_node;
 	t_list	*temp;
@@ -67,7 +67,7 @@ static	void	add_node(t_list **lst, char *buffer)
 	}
 }
 
-static int	detect_newline(t_list *lst)
+int	detect_newline(t_list *lst)
 {
 	int	i;
 
@@ -85,17 +85,42 @@ static int	detect_newline(t_list *lst)
 	return (0);
 }
 
-// int	main(void)
-// {
-// 	int	fd;
-// 	char	*str;
+char	*take_newline(t_list *lst)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*line;
 
-// 	fd = open("arquivo2.txt", O_RDONLY);
-// 	while ((str = get_next_line(fd)))
-// 	{
-// 		printf("%s", str);
-// 		free(str);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	if (!lst)
+		return (NULL);
+	len = line_length(lst);
+	line = malloc(len + 1);
+	i = 0;
+	while (lst)
+	{
+		j = 0;
+		while (i < len)
+		{
+			line[i++] = lst->content[j++];
+		}
+		lst = lst->next;
+	}
+	line[len + 1] = '\0';
+	return (line);
+}
+
+int	main(void)
+ {
+ 	int	fd;
+ 	char	*str;
+
+ 	fd = open("arquivo2.txt", O_RDONLY);
+ 	while ((str = get_next_line(fd)))
+ 	{
+ 		printf("%s", str);
+ 		free(str);
+ 	}
+ 	close(fd);
+ 	return (0);
+ }
